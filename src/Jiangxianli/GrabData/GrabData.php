@@ -60,7 +60,7 @@ class GrabData {
 
                 $html = SimpleHtml::str_get_html($this->content);
 
-                call_user_func($callback, $this->url,$this->title,$html->find('.content',0)->innertext);
+                call_user_func($callback, $this->url,$this->title,$html->find($this->$reg_content,0)->innertext);
 
                 return null;
 //                if(preg_match ($this->reg_content , $this->content, $matches)) {
@@ -72,7 +72,7 @@ class GrabData {
 
             }
 
-//            call_user_func($callback, $this->url,$this->title,$this->content);
+            call_user_func($callback, $this->url,$this->title,$this->content);
         }
 
 
