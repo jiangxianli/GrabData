@@ -52,6 +52,8 @@ class GrabData {
     public function getContent($depth=0,$callback){
 
         $this->content = CURL::get($this->url);
+        $this->content = mb_convert_encoding($this->content, 'utf-8', 'GBK,UTF-8,ASCII');
+
         if($this->reg_url && preg_match($this->reg_url,$this->url,$matches)){
 
             self::getTitle($this->content);
@@ -60,15 +62,9 @@ class GrabData {
 
                 $html = SimpleHtml::str_get_html($this->content);
 
-                call_user_func($callback, $this->url,$this->title,$html->find($this->$reg_content,0)->innertext);
+                call_user_func($callback, $this->url,$this->title,$html->find($this->$reg_content,0) ? $html->find($this->$reg_content,0)->innertext : $this->content);
 
                 return null;
-//                if(preg_match ($this->reg_content , $this->content, $matches)) {
-//
-//                    call_user_func($callback, $this->url,$this->title,$matches);
-//
-//                    return null;
-//                }
 
             }
 
